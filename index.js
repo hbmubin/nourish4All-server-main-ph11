@@ -35,10 +35,24 @@ async function run() {
     });
 
     // load details of food
-    app.get("/food-details/:id", async (req, res) => {
+    app.get("/food/:id", async (req, res) => {
       const id = req.params.id;
       const query = { _id: new ObjectId(id) };
       const result = await foodCollection.findOne(query);
+      res.send(result);
+    });
+
+    // load all food sort by
+    app.get("/foods-sortby", async (req, res) => {
+      const cursor = foodCollection.find().sort({ expiredDateTime: 1 });
+      const result = await cursor.toArray();
+      res.send(result);
+    });
+
+    // add new food
+    app.post("/foods", async (req, res) => {
+      const newFood = req.body;
+      const result = await foodCollection.insertOne(newFood);
       res.send(result);
     });
 
