@@ -56,6 +56,14 @@ async function run() {
       res.send(result);
     });
 
+    // load my foods
+    app.get("/my-foods/:email", async (req, res) => {
+      const email = req.params.email;
+      const query = { "donor.email": email };
+      const result = await foodCollection.find(query).toArray();
+      res.send(result);
+    });
+
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
     console.log(
