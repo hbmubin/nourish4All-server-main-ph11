@@ -91,6 +91,21 @@ async function run() {
       res.send(result);
     });
 
+    // request food
+    app.patch("/request/:id", async (req, res) => {
+      const id = req.params.id;
+      const filter = { _id: new ObjectId(id) };
+      const requestedFood = req.body;
+      const food = {
+        $set: {
+          foodStatus: requestedFood.foodStatus,
+          additionalNotes: requestedFood.additionalNotes,
+        },
+      };
+      const result = await foodCollection.updateOne(filter, food);
+      res.send(result);
+    });
+
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
     console.log(
