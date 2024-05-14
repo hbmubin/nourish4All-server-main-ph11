@@ -100,9 +100,20 @@ async function run() {
         $set: {
           foodStatus: requestedFood.foodStatus,
           additionalNotes: requestedFood.additionalNotes,
+          requestDate: requestedFood.requestDate,
+          benefactorEmail: requestedFood.benefactorEmail,
+          benefactorName: requestedFood.benefactorName,
         },
       };
       const result = await foodCollection.updateOne(filter, food);
+      res.send(result);
+    });
+
+    // load my food request
+    app.get("/my-food-request/:email", async (req, res) => {
+      const email = req.params.email;
+      const query = { benefactorEmail: email };
+      const result = await foodCollection.find(query).toArray();
       res.send(result);
     });
 
