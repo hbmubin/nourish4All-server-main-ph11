@@ -132,7 +132,6 @@ run().catch(console.dir);
 app.get("/", (req, res) => {
   res.send("Nourish4All is running");
 });
-
 app.listen(port, () => {
   console.log(`Nourish4All is running on port : ${port}`);
 });
